@@ -1,6 +1,6 @@
 {
   "name": "@sudobility/building_blocks",
-  "version": "0.0.332",
+  "version": "0.0.333",
   "description": "Higher-level shared UI building blocks for Sudobility apps",
   "type": "module",
   "sideEffects": false,
@@ -38,8 +38,8 @@
   },
   "peerDependencies": {
     "@heroicons/react": "^2.0.0",
-    "@sudobility/components": "^5.3.33",
-    "@sudobility/design": "^1.1.58",
+    "@sudobility/components": "^5.3.36",
+    "@sudobility/design": "^1.1.60",
     "@tanstack/react-query": "^5.0.0",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
@@ -95,17 +95,17 @@
   "devDependencies": {
     "@eslint/js": "^9.38.0",
     "@heroicons/react": "^2.2.0",
-    "@sudobility/auth-components": "^1.0.11",
-    "@sudobility/auth_lib": "^0.0.110",
-    "@sudobility/components": "^5.3.33",
-    "@sudobility/design": "^1.1.58",
-    "@sudobility/devops-components": "^2.0.19",
-    "@sudobility/di": "^1.5.70",
-    "@sudobility/di_web": "^0.1.251",
-    "@sudobility/entity_client": "^0.0.48",
-    "@sudobility/subscription-components": "^1.0.31",
-    "@sudobility/subscription_lib": "^0.0.51",
-    "@sudobility/types": "^1.9.71",
+    "@sudobility/auth-components": "^1.0.12",
+    "@sudobility/auth_lib": "^0.0.113",
+    "@sudobility/components": "^5.3.36",
+    "@sudobility/design": "^1.1.60",
+    "@sudobility/devops-components": "^2.0.20",
+    "@sudobility/di": "^1.5.73",
+    "@sudobility/di_web": "^0.1.254",
+    "@sudobility/entity_client": "^0.0.49",
+    "@sudobility/subscription-components": "^1.0.32",
+    "@sudobility/subscription_lib": "^0.0.52",
+    "@sudobility/types": "^1.9.72",
     "@tanstack/react-query": "^5.80.0",
     "@testing-library/dom": "^10.4.1",
     "@testing-library/jest-dom": "^6.9.1",
@@ -145,7 +145,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/johnqh/building_blocks.git"
+    "url": "https://github.com/Sudobility/building_blocks.git"
   },
   "license": "BUSL-1.1"
 }
