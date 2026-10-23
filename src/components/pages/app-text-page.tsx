@@ -54,9 +54,7 @@ export interface TextSectionWithSubsections {
  * Union type for all section types
  */
 export type TextSection =
-  | TextSectionWithContent
-  | TextSectionWithList
-  | TextSectionWithSubsections;
+  TextSectionWithContent | TextSectionWithList | TextSectionWithSubsections;
 
 /**
  * Contact information configuration

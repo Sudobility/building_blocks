@@ -63,8 +63,7 @@ export interface SudobilityAppWithFirebaseAuthAndEntitiesProps extends Omit<
    * Set to false to disable subscription features entirely.
    */
   EntityAwareSubscriptionProvider?:
-    | ComponentType<{ children: ReactNode }>
-    | false;
+    ComponentType<{ children: ReactNode }> | false;
 
   /**
    * Additional providers to wrap around the router content.

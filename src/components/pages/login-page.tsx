@@ -25,13 +25,7 @@ export interface AuthErrorInfo {
  * Each variant maps to a set of static, JIT-safe Tailwind classes.
  */
 export type LoginPageColorVariant =
-  | 'primary'
-  | 'blue'
-  | 'indigo'
-  | 'violet'
-  | 'orange'
-  | 'emerald'
-  | 'rose';
+  'primary' | 'blue' | 'indigo' | 'violet' | 'orange' | 'emerald' | 'rose';
 
 /**
  * Props for the LoginPage component
