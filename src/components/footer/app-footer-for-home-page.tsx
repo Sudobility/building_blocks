@@ -33,7 +33,7 @@ export interface AppFooterForHomePageProps {
   statusIndicator?: StatusIndicatorConfig;
 
   /**
-   * SystemStatusIndicator component from @sudobility/devops-components.
+   * SystemStatusIndicator component from @sudobility/components/devops.
    * Pass this to enable status indicator functionality.
    */
   StatusIndicatorComponent?: ComponentType<SystemStatusIndicatorProps>;

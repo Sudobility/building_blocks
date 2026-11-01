@@ -18,7 +18,7 @@ import { onIdTokenChanged } from 'firebase/auth';
 import { getInfoService } from '@sudobility/di/info';
 import { InfoType } from '@sudobility/types';
 import type { NetworkClient } from '@sudobility/types';
-import { useAuthStatus } from '@sudobility/auth-components';
+import { useAuthStatus } from '@sudobility/components/auth';
 import {
   getFirebaseAuth,
   FirebaseAuthNetworkService,

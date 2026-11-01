@@ -9,7 +9,7 @@
 import { ComponentType, ReactNode } from 'react';
 import { SudobilityApp, SudobilityAppProps } from './SudobilityApp';
 import { AuthQueryCacheReset } from './AuthQueryCacheReset';
-import { AuthProvider } from '@sudobility/auth-components';
+import { AuthProvider } from '@sudobility/components/auth';
 import {
   getFirebaseAuth,
   getFirebaseErrorMessage,

@@ -18,7 +18,7 @@ import type {
 import { DefaultLinkComponent, getCopyrightYear } from './shared';
 
 /**
- * Props for the SystemStatusIndicator component from @sudobility/devops-components.
+ * Props for the SystemStatusIndicator component from @sudobility/components/devops.
  */
 export interface SystemStatusIndicatorProps {
   statusPageUrl: string;
@@ -49,7 +49,7 @@ export interface AppFooterProps {
   statusIndicator?: StatusIndicatorConfig;
 
   /**
-   * SystemStatusIndicator component from @sudobility/devops-components.
+   * SystemStatusIndicator component from @sudobility/components/devops.
    * Pass this to enable status indicator functionality.
    */
   StatusIndicatorComponent?: ComponentType<SystemStatusIndicatorProps>;
@@ -86,7 +86,7 @@ export interface AppFooterProps {
  *
  * @example
  * ```tsx
- * import { SystemStatusIndicator } from '@sudobility/devops-components';
+ * import { SystemStatusIndicator } from '@sudobility/components/devops';
  *
  * <AppFooter
  *   version="1.0.0"

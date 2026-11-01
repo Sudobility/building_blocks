@@ -31,7 +31,7 @@ import { HelmetProvider } from 'react-helmet-async';
 import { I18nextProvider } from 'react-i18next';
 import type { i18n } from 'i18next';
 import { useLocation } from 'react-router-dom';
-import { NetworkProvider } from '@sudobility/devops-components';
+import { NetworkProvider } from '@sudobility/components/devops';
 import { getNetworkService, getFirebaseService } from '@sudobility/di/web';
 import { InfoBanner } from '@sudobility/di_web';
 import {

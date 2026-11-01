@@ -6,7 +6,7 @@
  */
 
 import { createContext, useContext } from 'react';
-import type { SubscriptionContextValue } from '@sudobility/subscription-components';
+import type { SubscriptionContextValue } from '@sudobility/components/subscription';
 
 /**
  * Stub subscription value for unauthenticated users or when

@@ -1,7 +1,7 @@
 /**
  * Firebase Auth dependent components
  *
- * These components require @sudobility/auth-components to be installed.
+ * These components require @sudobility/components/auth to be installed.
  * Import from '@sudobility/building_blocks/firebase' to use these.
  */
 

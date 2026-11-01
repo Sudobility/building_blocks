@@ -10,7 +10,7 @@ import {
   SudobilityAppWithFirebaseAuth,
   SudobilityAppWithFirebaseAuthProps,
 } from './SudobilityAppWithFirebaseAuth';
-import { useAuthStatus } from '@sudobility/auth-components';
+import { useAuthStatus } from '@sudobility/components/auth';
 import {
   CurrentEntityProvider,
   EntityClient,

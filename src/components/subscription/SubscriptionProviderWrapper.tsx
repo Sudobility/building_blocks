@@ -8,8 +8,8 @@ import { type ReactNode, useEffect, useRef } from 'react';
 import {
   SubscriptionProvider,
   useSubscriptionContext,
-} from '@sudobility/subscription-components';
-import { useAuthStatus } from '@sudobility/auth-components';
+} from '@sudobility/components/subscription';
+import { useAuthStatus } from '@sudobility/components/auth';
 import { getInfoService } from '@sudobility/di/info';
 import { InfoType } from '@sudobility/types';
 import {

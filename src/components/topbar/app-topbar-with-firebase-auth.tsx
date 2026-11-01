@@ -3,7 +3,7 @@ import { AppTopBar, type AppTopBarProps } from './app-topbar';
 
 /**
  * Auth menu item for the authenticated user dropdown.
- * This matches the AuthMenuItem interface from @sudobility/auth-components.
+ * This matches the AuthMenuItem interface from @sudobility/components/auth.
  */
 export interface AuthMenuItem {
   /** Unique identifier */
@@ -19,7 +19,7 @@ export interface AuthMenuItem {
 }
 
 /**
- * Props for the AuthAction component from @sudobility/auth-components.
+ * Props for the AuthAction component from @sudobility/components/auth.
  */
 export interface AuthActionProps {
   /** Avatar size in pixels */
@@ -41,7 +41,7 @@ export interface AppTopBarWithFirebaseAuthProps extends Omit<
   'renderAccountSection'
 > {
   /**
-   * AuthAction component from @sudobility/auth-components.
+   * AuthAction component from @sudobility/components/auth.
    * This is passed as a prop to avoid hard dependency on auth-components.
    */
   AuthActionComponent: ComponentType<AuthActionProps>;
@@ -69,14 +69,14 @@ export interface AppTopBarWithFirebaseAuthProps extends Omit<
  * AppTopBarWithFirebaseAuth - TopBar with Firebase authentication integration.
  *
  * This component wraps AppTopBar and provides the AuthAction component
- * from @sudobility/auth-components for the account section.
+ * from @sudobility/components/auth for the account section.
  *
  * Note: The AuthAction component must be passed as a prop to avoid
- * hard dependency on @sudobility/auth-components.
+ * hard dependency on @sudobility/components/auth.
  *
  * @example
  * ```tsx
- * import { AuthAction } from '@sudobility/auth-components';
+ * import { AuthAction } from '@sudobility/components/auth';
  *
  * <AppTopBarWithFirebaseAuth
  *   logo={{ src: '/logo.png', appName: 'My App' }}

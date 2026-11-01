@@ -6,7 +6,7 @@
  */
 
 import { type ReactNode, Suspense, lazy, useMemo } from 'react';
-import { useAuthStatus } from '@sudobility/auth-components';
+import { useAuthStatus } from '@sudobility/components/auth';
 import {
   SafeSubscriptionContext,
   STUB_SUBSCRIPTION_VALUE,
