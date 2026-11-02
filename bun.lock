@@ -14,7 +14,7 @@
         "@sudobility/di_web": "^0.1.270",
         "@sudobility/entity_client": "^0.0.57",
         "@sudobility/subscription_lib": "^0.0.60",
-        "@sudobility/subscription_pages": "^0.0.95",
+        "@sudobility/subscription_pages": "^0.0.97",
         "@sudobility/types": "^1.9.76",
         "@tanstack/react-query": "~5.104.5",
         "@testing-library/dom": "~10.4.2",
@@ -502,7 +502,7 @@
 
     "@sudobility/subscription_lib": ["@sudobility/subscription_lib@0.0.60", "https://npm.pkg.github.com/download/@sudobility/subscription_lib/0.0.60/1d7046d71c49ffb5d66284b2c966a783aed4f100", { "peerDependencies": { "@sudobility/types": "^1.9.76", "@tanstack/react-query": "^5.0.0", "react": "^18.0.0 || ^19.0.0" } }, "sha512-5yJ8iajDU39Rr1xmlCzrpNjH4CXTbNuptwAq0lgk5dh67boREzLqiuzvbK3z8faNQCn83eGSRoI4MJn0pdTsGQ=="],
 
-    "@sudobility/subscription_pages": ["@sudobility/subscription_pages@0.0.95", "https://npm.pkg.github.com/download/@sudobility/subscription_pages/0.0.95/871452c5043cc0f0adf789b537845cbed7bd8a29", { "dependencies": { "@sudobility/components": "^5.3.53" }, "peerDependencies": { "@revenuecat/purchases-js": "^1.0.0", "@sudobility/design": "^1.1.66", "@sudobility/subscription_lib": "^0.0.60", "@sudobility/types": "^1.9.76", "react": "^18.0.0 || ^19.0.0", "react-dom": "^18.0.0 || ^19.0.0" } }, "sha512-HDyJkxiON/hNxUd33KkNo6utKNN6X+9oT7u+HP90b5viIezT8YegPtQ2TV4R5eDtW/JJcrJB+xdI5I5OBXUz/A=="],
+    "@sudobility/subscription_pages": ["@sudobility/subscription_pages@0.0.97", "https://npm.pkg.github.com/download/@sudobility/subscription_pages/0.0.97/d992ee3c21f7730ff1a4f1757eb2cd412c2ad056", { "dependencies": { "@sudobility/components": "^5.3.53" }, "peerDependencies": { "@revenuecat/purchases-js": "^1.0.0", "@sudobility/design": "^1.1.66", "@sudobility/di": "^1.5.83", "@sudobility/subscription_lib": "^0.0.60", "@sudobility/types": "^1.9.76", "react": "^18.0.0 || ^19.0.0", "react-dom": "^18.0.0 || ^19.0.0" } }, "sha512-dT6enkICMiu/7/HkrXZ7W29vGDFVG3S60OtvELKX5MdC5RNprc6oAJnKYPLUznyRXrg/WRMekig/eYzUOFKsNw=="],
 
     "@sudobility/types": ["@sudobility/types@1.9.76", "https://npm.pkg.github.com/download/@sudobility/types/1.9.76/71635156f72fd9461107d5f147b3dc1c49f863d0", {}, "sha512-b7maZHR5wM84VlQ+l9R+2guzSOrExog6OUNy1oCe7h0abW13syycmnLQL0g+qql0aQ84qTB4A0mJelhY3Vef4Q=="],
 
