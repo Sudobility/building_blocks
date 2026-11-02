@@ -12,11 +12,13 @@ import {
 import { useAuthStatus } from '@sudobility/components/auth';
 import { getInfoService } from '@sudobility/di/info';
 import { InfoType } from '@sudobility/types';
+// refreshSubscription is agnostic business logic (subscription_lib); the
+// RevenueCat user setters are web-adapter functions (subscription_pages).
+import { refreshSubscription } from '@sudobility/subscription_lib';
 import {
   setRevenueCatUser,
   clearRevenueCatUser,
-  refreshSubscription,
-} from '@sudobility/subscription_lib';
+} from '@sudobility/subscription_pages';
 import { SafeSubscriptionContext } from './SafeSubscriptionContext';
 
 interface SubscriptionProviderWrapperProps {

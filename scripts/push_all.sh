@@ -48,14 +48,18 @@ PROJECTS=(
     "../auth_service:60"
     "../seo_lib:0"
     # Level 3: Depends on levels 0-2
+    # NOTE: subscription_pages / subscription_pages_rn must precede di_web / di_rn.
+    # The RevenueCat adapters moved out of subscription_lib into these pages
+    # packages, and di_web/di_rn now consume them, so they must publish first.
+    "../subscription_pages:60"
+    "../subscription_pages_rn:60"
     "../di_web:0"
     "../di_rn:0"
     "../entity_pages:0"
     "../entity_pages_rn:0"
-    "../subscription_pages:0"
-    "../subscription_pages_rn:0"
     "../ratelimit_pages:0"
     "../consumables_pages:60"
+    "../consumables_pages_rn:0"
     # Level 4: Depends on levels 0-3
     "../building_blocks:0"
     "../building_blocks_rn:60"
