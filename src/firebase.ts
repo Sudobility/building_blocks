@@ -9,8 +9,12 @@
 export { SudobilityAppWithFirebaseAuth } from './components/app/SudobilityAppWithFirebaseAuth';
 export type { SudobilityAppWithFirebaseAuthProps } from './components/app/SudobilityAppWithFirebaseAuth';
 
-export { SudobilityAppWithFirebaseAuthAndEntities } from './components/app/SudobilityAppWithFirebaseAuthAndEntities';
-export type { SudobilityAppWithFirebaseAuthAndEntitiesProps } from './components/app/SudobilityAppWithFirebaseAuthAndEntities';
+// NOTE: SudobilityAppWithFirebaseAuthAndEntities moved to
+// @sudobility/entity_pages, and the subscription providers
+// (LazySubscriptionProvider, SubscriptionProviderWrapper, SafeSubscriptionContext)
+// moved to @sudobility/subscription_pages, so this package keeps no dependency on
+// @sudobility/entity_client, @sudobility/subscription_lib or
+// @sudobility/subscription_pages. Feature wiring is opt-in per app.
 
 // API context (requires auth status)
 export {
@@ -20,6 +24,3 @@ export {
   useApiSafe,
   type ApiContextValue,
 } from './components/api/ApiContext';
-
-// Subscription providers (require auth status)
-export { LazySubscriptionProvider } from './components/subscription/LazySubscriptionProvider';

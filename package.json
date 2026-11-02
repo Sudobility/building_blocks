@@ -1,6 +1,6 @@
 {
   "name": "@sudobility/building_blocks",
-  "version": "0.0.349",
+  "version": "0.0.351",
   "description": "Higher-level shared UI building blocks for Sudobility apps",
   "type": "module",
   "sideEffects": false,

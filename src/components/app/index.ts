@@ -5,5 +5,5 @@ export type { SudobilityAppProps } from './SudobilityApp';
 export { SudobilityAppWithFirebaseAuth } from './SudobilityAppWithFirebaseAuth';
 export type { SudobilityAppWithFirebaseAuthProps } from './SudobilityAppWithFirebaseAuth';
 
-export { SudobilityAppWithFirebaseAuthAndEntities } from './SudobilityAppWithFirebaseAuthAndEntities';
-export type { SudobilityAppWithFirebaseAuthAndEntitiesProps } from './SudobilityAppWithFirebaseAuthAndEntities';
+// SudobilityAppWithFirebaseAuthAndEntities moved to @sudobility/entity_pages
+// (keeps entity_client out of this package).

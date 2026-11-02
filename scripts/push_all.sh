@@ -45,24 +45,28 @@ PROJECTS=(
     "../subscription_lib:0"
     "../subscription_service:0"
     "../auth_lib:0"
-    "../auth_service:60"
+    "../auth_service:0"
     "../seo_lib:0"
     # Level 3: Depends on levels 0-2
     # NOTE: subscription_pages / subscription_pages_rn must precede di_web / di_rn.
     # The RevenueCat adapters moved out of subscription_lib into these pages
     # packages, and di_web/di_rn now consume them, so they must publish first.
-    "../subscription_pages:60"
-    "../subscription_pages_rn:60"
     "../di_web:0"
-    "../di_rn:0"
-    "../entity_pages:0"
-    "../entity_pages_rn:0"
-    "../ratelimit_pages:0"
-    "../consumables_pages:60"
-    "../consumables_pages_rn:0"
+    "../di_rn:60"
     # Level 4: Depends on levels 0-3
     "../building_blocks:0"
     "../building_blocks_rn:60"
+    # Level 5: entity_pages / entity_pages_rn now host
+    # SudobilityAppWithFirebaseAuthAndEntities, which composes building_blocks'
+    # app shell, so they must publish after building_blocks/building_blocks_rn
+    # (and after subscription_pages, which they also consume).
+    "../subscription_pages:0"
+    "../subscription_pages_rn:0"
+    "../ratelimit_pages:0"
+    "../consumables_pages:0"
+    "../consumables_pages_rn:0"
+    "../entity_pages:0"
+    "../entity_pages_rn:60"
 )
 
 # Source reusable script: prefer local workflows repo, fall back to GitHub

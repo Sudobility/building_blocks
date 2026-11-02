@@ -11,12 +11,9 @@ export * from './components/empty-state';
 export { SudobilityApp } from './components/app/SudobilityApp';
 export type { SudobilityAppProps } from './components/app/SudobilityApp';
 
-// Subscription components without auth dependency
-export {
-  SafeSubscriptionContext,
-  STUB_SUBSCRIPTION_VALUE,
-  useSafeSubscription,
-} from './components/subscription/SafeSubscriptionContext';
+// Subscription context/providers moved to @sudobility/subscription_pages
+// (and the entity app wrapper to @sudobility/entity_pages) so building_blocks
+// keeps no dependency on subscription_lib / subscription_pages / entity_client.
 
 // Constants
 export * from './constants';
