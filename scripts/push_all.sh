@@ -36,23 +36,23 @@ PROJECTS=(
     "../mail_box_components:0"
     "../mail_box_components_rn:60"
     # Level 2: Depends on level 0 + level 1
+    "../auth_lib:0"
+    "../auth_service:0"
     "../entity_client:0"
     "../entity_service:0"
     "../ratelimit_client:0"
     "../ratelimit_service:0"
+    "../seo_lib:60"
+    # Level 3: Depends on levels 0-2
+    "../di_web:0"
+    "../di_rn:0"
     "../consumables_client:0"
     "../consumables_service:0"
     "../subscription_lib:0"
     "../subscription_service:0"
-    "../auth_lib:0"
-    "../auth_service:0"
-    "../seo_lib:0"
-    # Level 3: Depends on levels 0-2
     # NOTE: subscription_pages / subscription_pages_rn must precede di_web / di_rn.
     # The RevenueCat adapters moved out of subscription_lib into these pages
     # packages, and di_web/di_rn now consume them, so they must publish first.
-    "../di_web:0"
-    "../di_rn:60"
     # Level 4: Depends on levels 0-3
     "../building_blocks:0"
     "../building_blocks_rn:60"
