@@ -7,12 +7,14 @@
 
 ## Overview
 
-`@sudobility/building_blocks` is a React component library providing higher-level, reusable UI building blocks for Sudobility applications. It builds on top of `@sudobility/components` and `@sudobility/design` to deliver production-ready app shells, navigation bars, footers, settings pages, subscription/pricing screens, and full app wrappers with Firebase auth, entity management, and i18n support.
+`@sudobility/building_blocks` is a React component library providing higher-level, reusable UI building blocks for Sudobility applications. It builds on top of `@sudobility/components` and `@sudobility/design` to deliver production-ready app shells, navigation bars, footers, settings pages, content/sitemap/login pages, and app wrappers with optional Firebase auth and i18n support.
+
+This package intentionally holds only the common, broadly reusable building blocks. **It has no dependency on, and contains no components for, entities or subscriptions.** The entity-aware app wrapper lives in `@sudobility/entity_pages`; subscription/pricing screens and providers live in `@sudobility/subscription_pages`. Apps compose those on top of `building_blocks`.
 
 - **Package**: `@sudobility/building_blocks`
 - **License**: BUSL-1.1
 - **Package Manager**: Bun (always use `bun` instead of `npm`)
-- **Framework**: React 18/19, TypeScript ~5.9.3, Vite 6.x
+- **Framework**: React 18/19, TypeScript ~6.0.3, Vite 8.x
 - **Build**: ESM-only library via Vite lib mode + tsc declarations
 - **Testing**: Vitest with React Testing Library
 
@@ -27,9 +29,9 @@ src/
 ├── components/
 │   ├── index.ts                    # Re-exports all component subdirectories
 │   ├── app/                        # App wrapper components (provider stacks)
-│   │   ├── SudobilityApp.tsx                              # Base app shell (i18n, theme, query, routing, toast)
-│   │   ├── SudobilityAppWithFirebaseAuth.tsx               # + Firebase auth + ApiProvider
-│   │   ├── SudobilityAppWithFirebaseAuthAndEntities.tsx    # + entity client + subscription
+│   │   ├── SudobilityApp.tsx                   # Base app shell (i18n, theme, query, routing, toast)
+│   │   ├── SudobilityAppWithFirebaseAuth.tsx   # + Firebase auth + ApiProvider
+│   │   ├── AuthQueryCacheReset.tsx             # Clears react-query cache on auth change (internal)
 │   │   └── index.ts
 │   ├── api/                        # API context (Firebase token management)
 │   │   ├── ApiContext.tsx           # ApiProvider, useApi, useApiSafe hooks
@@ -54,12 +56,8 @@ src/
 │   │   ├── appearance-settings.tsx     # Theme (light/dark/system) + font size selector
 │   │   ├── global-settings-page.tsx    # Master-detail settings page (extensible sections)
 │   │   └── index.ts
-│   ├── subscription/               # Subscription/pricing components
-│   │   ├── AppPricingPage.tsx                 # Public pricing page (uses subscription_lib hooks)
-│   │   ├── AppSubscriptionsPage.tsx           # Authenticated subscription management page
-│   │   ├── SafeSubscriptionContext.tsx        # Safe context with stub values for unauthenticated
-│   │   ├── LazySubscriptionProvider.tsx       # Lazy-loads RevenueCat SDK (~600KB) on auth
-│   │   ├── SubscriptionProviderWrapper.tsx    # Bridges subscription-components with auth/entity
+│   ├── empty-state/                # Empty-state placeholder
+│   │   ├── EmptyState.tsx           # Icon + title + description + optional action
 │   │   └── index.ts
 │   └── pages/                      # Full page components
 │       ├── app-text-page.tsx       # Markdown/text content page (privacy, terms, etc.)
@@ -76,12 +74,19 @@ src/
 ├── test/
 │   └── setup.ts                    # Vitest setup (@testing-library/jest-dom)
 └── __tests__/                      # Test files
+    ├── app-breadcrumbs-theme.test.tsx
     ├── app-breadcrumbs.test.tsx
     ├── app-footer.test.tsx
     ├── app-page-layout.test.tsx
+    ├── app-sitemap-page.test.tsx
+    ├── app-text-page.test.tsx
     ├── app-topbar.test.tsx
+    ├── appearance-settings.test.tsx
+    ├── auth-query-cache-reset.test.tsx
+    ├── global-settings-page.test.tsx
     ├── language-selector.test.tsx
-    └── languages.test.ts
+    ├── languages.test.ts
+    └── login-page.test.tsx
 ```
 
 ## Key Components
@@ -92,9 +97,10 @@ src/
 |-----------|-------------|----------|
 | `SudobilityApp` | Base app shell | HelmetProvider, I18nextProvider, ThemeProvider, NetworkProvider, QueryClientProvider, ToastProvider, BrowserRouter, InfoBanner, PageTracker |
 | `SudobilityAppWithFirebaseAuth` | + Firebase auth | All of above + AuthProvider, ApiProvider (Firebase ID token management) |
-| `SudobilityAppWithFirebaseAuthAndEntities` | + entities + subscriptions | All of above + CurrentEntityProvider, LazySubscriptionProvider |
 
-Import the Firebase-dependent wrappers from `@sudobility/building_blocks/firebase`.
+Import the Firebase-dependent wrapper from `@sudobility/building_blocks/firebase`.
+
+> The entity-aware wrapper (`SudobilityAppWithFirebaseAuthAndEntities`) is **not** in this package — it lives in `@sudobility/entity_pages`, which layers entity + subscription wiring on top of `SudobilityAppWithFirebaseAuth`.
 
 ### TopBar Components
 
@@ -126,14 +132,13 @@ Import the Firebase-dependent wrappers from `@sudobility/building_blocks/firebas
 | `GlobalSettingsPage` | Master-detail settings layout | Appearance built-in as first section, extensible via `additionalSections` |
 | `AppearanceSettings` | Theme and font size selects | Standalone or embedded in GlobalSettingsPage |
 
-### Subscription Components
+### Empty State
 
 | Component | Description | Use Case |
 |-----------|-------------|----------|
-| `AppPricingPage` | Public pricing display | Marketing pricing page (authenticated and unauthenticated states) |
-| `AppSubscriptionsPage` | User subscription management | Authenticated users - current plan, upgrade, restore purchases |
-| `LazySubscriptionProvider` | Lazy-loads RevenueCat SDK | Defers ~600KB SDK load until user authenticates |
-| `SafeSubscriptionContext` | Stub subscription context | Provides safe defaults for unauthenticated users |
+| `EmptyState` | Icon + title + description + optional action | Empty lists, no-results states, placeholder panels |
+
+> **No subscription components here.** Pricing/subscription pages and providers (`AppPricingPage`, `AppSubscriptionsPage`, `LazySubscriptionProvider`, `SafeSubscriptionContext`, `SubscriptionProviderWrapper`) live in `@sudobility/subscription_pages`.
 
 ### Page Components
 
@@ -192,8 +197,8 @@ bun run typecheck && bun run lint && bun run test
 
 The library has two entry points to manage dependency trees:
 
-- **`@sudobility/building_blocks`** (main): Core components with no hard dependency on auth-components, auth_lib, di, or entity_client. Safe to import in any context.
-- **`@sudobility/building_blocks/firebase`**: Firebase-auth-dependent exports (SudobilityAppWithFirebaseAuth, SudobilityAppWithFirebaseAuthAndEntities, ApiProvider, LazySubscriptionProvider, SubscriptionProviderWrapper). These require `@sudobility/auth-components` and related packages.
+- **`@sudobility/building_blocks`** (main): Core components with no hard dependency on auth-components, auth_lib, or di. Safe to import in any context.
+- **`@sudobility/building_blocks/firebase`**: Firebase-auth-dependent exports (`SudobilityAppWithFirebaseAuth`, `ApiProvider`, `useApi`, `useApiSafe`). These require `@sudobility/components/auth` and related auth packages.
 
 ### Component Injection Pattern
 
@@ -240,7 +245,7 @@ interface AnalyticsTrackingParams {
 }
 ```
 
-Components with analytics: `AppPricingPage`, `AppSubscriptionsPage`, `GlobalSettingsPage`, `AppFooter`, `AppFooterForHomePage`.
+Components with analytics: `GlobalSettingsPage`, `AppFooter`, `AppFooterForHomePage`.
 
 ### Provider Composition (App Wrappers)
 
@@ -251,7 +256,8 @@ HelmetProvider > I18nextProvider > ThemeProvider > NetworkProvider > QueryClient
 ```
 
 `SudobilityAppWithFirebaseAuth` adds: `AuthProvider > ApiProvider` inside AppProviders.
-`SudobilityAppWithFirebaseAuthAndEntities` adds: `AuthAwareEntityProvider > EntityAwareSubscriptionProvider` inside AppProviders.
+
+Entity/subscription providers are composed by `@sudobility/entity_pages` and `@sudobility/subscription_pages` on top of this wrapper — they are not part of `building_blocks`.
 
 ### TypeScript
 
@@ -264,12 +270,12 @@ HelmetProvider > I18nextProvider > ThemeProvider > NetworkProvider > QueryClient
 ### File Naming Conventions
 
 - **kebab-case** (`app-footer.tsx`, `app-topbar.tsx`, `login-page.tsx`) is the standard for most component files
-- **PascalCase** (`AppPricingPage.tsx`, `AppSubscriptionsPage.tsx`, `LazySubscriptionProvider.tsx`, `SudobilityApp.tsx`) is reserved for subscription components and top-level app wrapper components
+- **PascalCase** (`SudobilityApp.tsx`, `SudobilityAppWithFirebaseAuth.tsx`, `EmptyState.tsx`) is reserved for top-level app wrapper components and a few standalone components
 - Tests: `{component-name}.test.tsx` in `src/__tests__/`
 - Index files: barrel re-exports for all public APIs
 - Each component directory has its own `index.ts`
 - Shared utilities within a directory: `shared.tsx` (e.g., `footer/shared.tsx`)
-- **Note**: Do not rename existing files. This convention documents the current state. New components should use kebab-case unless they are subscription or app wrapper components.
+- **Note**: Do not rename existing files. This convention documents the current state. New components should use kebab-case unless they are app wrapper components.
 
 ## Common Tasks
 
@@ -317,7 +323,7 @@ Edit `src/constants/languages.ts` and add to `DEFAULT_LANGUAGES` array. If the l
 
 ### Add a new app wrapper variant
 
-Extend `SudobilityAppWithFirebaseAuth` or `SudobilityAppWithFirebaseAuthAndEntities` and compose additional providers via the `AppProviders` prop pattern.
+Extend `SudobilityApp` or `SudobilityAppWithFirebaseAuth` and compose additional providers via the `AppProviders` prop pattern. (Entity/subscription-aware variants belong in `@sudobility/entity_pages` / `@sudobility/subscription_pages`, not here.)
 
 ## Build Output
 
@@ -361,17 +367,16 @@ source of truth for them, not this table.
 | Package | Required For |
 |---------|-------------|
 | `firebase` (^11 or ^12) | `LoginPage`, Firebase auth features |
-| `@sudobility/auth-components` | `AppTopBarWithFirebaseAuth`, Firebase app wrappers, `LazySubscriptionProvider` |
-| `@sudobility/auth_lib` | Firebase app wrappers, `ApiProvider` |
+| `@sudobility/auth-components` | `AppTopBarWithFirebaseAuth`, `SudobilityAppWithFirebaseAuth` |
+| `@sudobility/auth_lib` | `SudobilityAppWithFirebaseAuth`, `ApiProvider` |
 | `@sudobility/web3-components` | `AppTopBarWithWallet` |
 | `@sudobility/devops-components` | `SystemStatusIndicator` in footers, `NetworkProvider` in app wrappers |
-| `@sudobility/subscription-components` | `AppPricingPage`, `AppSubscriptionsPage`, subscription providers |
-| `@sudobility/subscription_lib` | Subscription hooks (useSubscriptionPeriods, useUserSubscription, etc.) |
-| `@sudobility/entity_client` | `SudobilityAppWithFirebaseAuthAndEntities` |
 | `@sudobility/di` / `@sudobility/di_web` | Service locator for InfoBanner, Firebase services |
 | `@sudobility/types` | Shared TypeScript enums (Theme, FontSize, InfoType, RateLimitsConfigData) |
 | `i18next-browser-languagedetector` | Auto language detection in `initializeI18n` |
 | `i18next-http-backend` | Loading translation files via HTTP in `initializeI18n` |
+
+> **Not dependencies of this package:** `@sudobility/entity_client`, `@sudobility/subscription_lib`, `@sudobility/subscription_pages`, and `@sudobility/subscription-components`. They belong to the entity/subscription packages (`@sudobility/entity_pages`, `@sudobility/subscription_pages`) that build on top of `building_blocks`.
 
 ## Testing Guidelines
 
@@ -393,9 +398,9 @@ Test patterns:
 
 | Variable | Used By | Purpose |
 |----------|---------|---------|
-| `VITE_API_URL` | `ApiProvider`, `SudobilityAppWithFirebaseAuthAndEntities` | Base API URL |
-| `VITE_REVENUECAT_API_KEY` | `SudobilityAppWithFirebaseAuthAndEntities` | RevenueCat production API key |
-| `VITE_REVENUECAT_API_KEY_SANDBOX` | `SudobilityAppWithFirebaseAuthAndEntities` | RevenueCat sandbox API key |
+| `VITE_API_URL` | `ApiProvider` | Base API URL |
+
+> RevenueCat/subscription env vars (`VITE_REVENUECAT_API_KEY*`) are consumed by `@sudobility/subscription_pages`, not this package.
 
 ## Troubleshooting
 

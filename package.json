@@ -1,6 +1,6 @@
 {
   "name": "@sudobility/building_blocks",
-  "version": "0.0.355",
+  "version": "0.0.356",
   "description": "Higher-level shared UI building blocks for Sudobility apps",
   "type": "module",
   "sideEffects": false,
@@ -67,9 +67,6 @@
     "@sudobility/di": {
       "optional": true
     },
-    "@sudobility/entity_client": {
-      "optional": true
-    },
     "firebase": {
       "optional": true
     },
@@ -77,12 +74,6 @@
       "optional": true
     },
     "@sudobility/types": {
-      "optional": true
-    },
-    "@sudobility/subscription_lib": {
-      "optional": true
-    },
-    "@sudobility/subscription_pages": {
       "optional": true
     }
   },
@@ -94,9 +85,6 @@
     "@sudobility/design": "^1.1.68",
     "@sudobility/di": "^1.5.84",
     "@sudobility/di_web": "^0.1.272",
-    "@sudobility/entity_client": "^0.0.58",
-    "@sudobility/subscription_lib": "^0.0.61",
-    "@sudobility/subscription_pages": "^0.0.99",
     "@sudobility/types": "^1.9.78",
     "@tanstack/react-query": "~5.104.5",
     "@testing-library/dom": "~10.4.2",
