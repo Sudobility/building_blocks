@@ -14,7 +14,7 @@
         "@sudobility/di_web": "^0.1.272",
         "@sudobility/entity_client": "^0.0.58",
         "@sudobility/subscription_lib": "^0.0.61",
-        "@sudobility/subscription_pages": "^0.0.98",
+        "@sudobility/subscription_pages": "^0.0.99",
         "@sudobility/types": "^1.9.78",
         "@tanstack/react-query": "~5.104.5",
         "@testing-library/dom": "~10.4.2",
@@ -502,7 +502,7 @@
 
     "@sudobility/subscription_lib": ["@sudobility/subscription_lib@0.0.61", "https://npm.pkg.github.com/download/@sudobility/subscription_lib/0.0.61/cbf464cba3dbdfdbd6f1f93d86c0b765b07f4805", { "peerDependencies": { "@sudobility/types": "^1.9.78", "@tanstack/react-query": "^5.0.0", "react": "^18.0.0 || ^19.0.0" } }, "sha512-Q+k8lmG69Hk55ZH7OIjzZA3L3Snv8rqDIavas+azv2rYl1N5UXCA0lG4V96mf4u6lAUGj7eu9QTBICRSKUVUbg=="],
 
-    "@sudobility/subscription_pages": ["@sudobility/subscription_pages@0.0.98", "https://npm.pkg.github.com/download/@sudobility/subscription_pages/0.0.98/d111317a78e9ee6a65838c560491f73422e092f8", { "dependencies": { "@sudobility/components": "^5.3.54" }, "peerDependencies": { "@revenuecat/purchases-js": "^1.0.0", "@sudobility/design": "^1.1.68", "@sudobility/di": "^1.5.84", "@sudobility/subscription_lib": "^0.0.61", "@sudobility/types": "^1.9.78", "react": "^18.0.0 || ^19.0.0", "react-dom": "^18.0.0 || ^19.0.0" } }, "sha512-CRC2axVI8oM8nIbXl+fAQIG5fdRT9ptT95QS0r/epOJgRk+PyLnPa3tRt9lAM6mPsFEvWCkxerhjjtHTrgeqvg=="],
+    "@sudobility/subscription_pages": ["@sudobility/subscription_pages@0.0.99", "https://npm.pkg.github.com/download/@sudobility/subscription_pages/0.0.99/d6a25342aa67fd56f17b61f0160080f0b61e9190", { "dependencies": { "@sudobility/components": "^5.3.55" }, "peerDependencies": { "@revenuecat/purchases-js": "^1.0.0", "@sudobility/design": "^1.1.68", "@sudobility/di": "^1.5.84", "@sudobility/subscription_lib": "^0.0.61", "@sudobility/types": "^1.9.78", "react": "^18.0.0 || ^19.0.0", "react-dom": "^18.0.0 || ^19.0.0" } }, "sha512-xuRMmAQV1BEvYDldNBhKyErPvZ+X2bEHhMjtIeuH+0QtwvGK7D0rUaJpAcxk+9QN+NKfw2Rqow2DlJBr0Ck7lw=="],
 
     "@sudobility/types": ["@sudobility/types@1.9.78", "https://npm.pkg.github.com/download/@sudobility/types/1.9.78/19ca0df5ad7d490bafc1b84384a8002f5dbc29ea", {}, "sha512-W6DYMUf7D0cVVUHDv5T8YZ339Wyay6xPx0CsdfNVgHDsm1ISDLhwacUwlM9xnvwXHGuAhP77wRVVo3uKGZe46Q=="],
 
