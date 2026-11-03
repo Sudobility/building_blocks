@@ -2,104 +2,34 @@
  * SudobilityAppWithFirebaseAuth - App wrapper with Firebase authentication
  *
  * Extends SudobilityApp with:
- * - Firebase AuthProviderWrapper for authentication (built-in default)
+ * - An app-provided auth provider (the `AuthProviderWrapper` prop). The auth
+ *   *logic* lives in `@sudobility/auth_lib` (each app builds its provider with
+ *   `createFirebaseAuthContext`); `@sudobility/components` is UI only.
  * - ApiProvider for network/token management (built-in default)
  * - Query cache reset when the signed-in user changes
+ *
+ * `initializeFirebaseAuth()` runs synchronously in render, before the inner
+ * `ApiProvider` mounts, so `ApiProvider`'s `getFirebaseAuth()` sees an
+ * initialised Firebase app on first render (child effects run before parent
+ * effects, so the provider cannot rely on the auth provider's own effect to
+ * initialise Firebase first). The app's `AuthProvider` reuses that same app.
  */
 import { ComponentType, ReactNode } from 'react';
 import { SudobilityApp, SudobilityAppProps } from './SudobilityApp';
 import { AuthQueryCacheReset } from './AuthQueryCacheReset';
-import { AuthProvider } from '@sudobility/components/auth';
-import {
-  getFirebaseAuth,
-  getFirebaseErrorMessage,
-  initializeFirebaseAuth,
-} from '@sudobility/auth_lib';
+import { initializeFirebaseAuth } from '@sudobility/auth_lib';
 import { ApiProvider } from '../api';
-
-/** Auth text labels for UI - all fields required for localization */
-export interface AuthTexts {
-  signInTitle: string;
-  signInWithEmail: string;
-  createAccount: string;
-  resetPassword: string;
-  signIn: string;
-  signUp: string;
-  logout: string;
-  login: string;
-  continueWithGoogle: string;
-  continueWithApple: string;
-  continueWithEmail: string;
-  sendResetLink: string;
-  backToSignIn: string;
-  close: string;
-  email: string;
-  password: string;
-  confirmPassword: string;
-  displayName: string;
-  emailPlaceholder: string;
-  passwordPlaceholder: string;
-  confirmPasswordPlaceholder: string;
-  displayNamePlaceholder: string;
-  forgotPassword: string;
-  noAccount: string;
-  haveAccount: string;
-  or: string;
-  resetEmailSent: string;
-  resetEmailSentDesc: string;
-  passwordMismatch: string;
-  passwordTooShort: string;
-  loading: string;
-}
-
-/** Auth error messages for Firebase error codes */
-export interface AuthErrorTexts {
-  'auth/user-not-found': string;
-  'auth/wrong-password': string;
-  'auth/invalid-email': string;
-  'auth/invalid-credential': string;
-  'auth/email-already-in-use': string;
-  'auth/weak-password': string;
-  'auth/too-many-requests': string;
-  'auth/network-request-failed': string;
-  'auth/popup-closed-by-user': string;
-  'auth/popup-blocked': string;
-  'auth/account-exists-with-different-credential': string;
-  'auth/operation-not-allowed': string;
-  default: string;
-}
 
 export interface SudobilityAppWithFirebaseAuthProps extends Omit<
   SudobilityAppProps,
   'AppProviders' | 'RouterWrapper'
 > {
   /**
-   * Custom Firebase auth provider wrapper component (optional).
-   * If provided, authTexts and authErrorTexts are ignored.
+   * The app's auth provider component — typically the `AuthProvider` returned
+   * by `createFirebaseAuthContext` (`@sudobility/auth_lib`). Mounted around the
+   * whole app so `useAuth()`/`useIsLoggedIn()` work everywhere.
    */
-  AuthProviderWrapper?: ComponentType<{ children: ReactNode }>;
-
-  /**
-   * Localized auth UI texts (required if not using custom AuthProviderWrapper).
-   */
-  authTexts?: AuthTexts;
-
-  /**
-   * Localized auth error messages (required if not using custom AuthProviderWrapper).
-   */
-  authErrorTexts?: AuthErrorTexts;
-
-  /**
-   * Auth providers to enable (optional).
-   * Defaults to ["google", "email"].
-   */
-  authProviders?: ('google' | 'email' | 'apple')[];
-
-  /**
-   * Whether to enable anonymous auth (optional).
-   * Defaults to false.
-   */
-  enableAnonymousAuth?: boolean;
+  AuthProviderWrapper: ComponentType<{ children: ReactNode }>;
 
   /**
    * Custom ApiProvider component (optional).
@@ -135,77 +65,16 @@ export interface SudobilityAppWithFirebaseAuthProps extends Omit<
 }
 
 /**
- * Default AuthProviderWrapper using Firebase
- */
-function DefaultAuthProviderWrapper({
-  children,
-  providers,
-  enableAnonymous,
-  texts,
-  errorTexts,
-}: {
-  children: ReactNode;
-  providers: ('google' | 'email' | 'apple')[];
-  enableAnonymous: boolean;
-  texts: AuthTexts;
-  errorTexts: AuthErrorTexts;
-}) {
-  // Initialize Firebase Auth (idempotent - safe to call multiple times)
-  initializeFirebaseAuth();
-
-  const auth = getFirebaseAuth();
-
-  // If Firebase is not configured, render children without auth
-  if (!auth) {
-    console.warn(
-      '[SudobilityAppWithFirebaseAuth] No auth instance - Firebase not configured'
-    );
-    return <>{children}</>;
-  }
-
-  return (
-    <AuthProvider
-      firebaseConfig={{ type: 'instance', auth: auth }}
-      providerConfig={{
-        providers,
-        enableAnonymous,
-      }}
-      texts={texts}
-      errorTexts={errorTexts}
-      resolveErrorMessage={getFirebaseErrorMessage}
-    >
-      {children}
-    </AuthProvider>
-  );
-}
-
-/**
  * SudobilityAppWithFirebaseAuth - App wrapper with Firebase authentication
  *
  * @example
  * ```tsx
- * // With custom AuthProviderWrapper (recommended for i18n)
  * import { SudobilityAppWithFirebaseAuth } from '@sudobility/building_blocks';
+ * import { AuthProvider } from '@/context/AuthContext'; // auth_lib-based
  *
  * function App() {
  *   return (
- *     <SudobilityAppWithFirebaseAuth
- *       AuthProviderWrapper={MyAuthProviderWrapper}
- *     >
- *       <Routes>
- *         <Route path="/" element={<HomePage />} />
- *       </Routes>
- *     </SudobilityAppWithFirebaseAuth>
- *   );
- * }
- *
- * // With localized texts
- * function App() {
- *   return (
- *     <SudobilityAppWithFirebaseAuth
- *       authTexts={localizedAuthTexts}
- *       authErrorTexts={localizedAuthErrorTexts}
- *     >
+ *     <SudobilityAppWithFirebaseAuth AuthProviderWrapper={AuthProvider}>
  *       <Routes>
  *         <Route path="/" element={<HomePage />} />
  *       </Routes>
@@ -215,11 +84,7 @@ function DefaultAuthProviderWrapper({
  * ```
  */
 export function SudobilityAppWithFirebaseAuth({
-  AuthProviderWrapper: AuthProviderWrapperProp,
-  authTexts,
-  authErrorTexts,
-  authProviders = ['google', 'email'],
-  enableAnonymousAuth = false,
+  AuthProviderWrapper,
   ApiProvider: ApiProviderProp,
   AppProviders,
   RouterWrapper,
@@ -231,6 +96,11 @@ export function SudobilityAppWithFirebaseAuth({
   const CombinedProviders: ComponentType<{ children: ReactNode }> = ({
     children,
   }) => {
+    // Bring Firebase (and any regional proxy) up synchronously, before the
+    // inner ApiProvider renders — it reads getFirebaseAuth() on mount.
+    // Idempotent; the app's AuthProvider reuses the same app.
+    initializeFirebaseAuth();
+
     let content: ReactNode = (
       <>
         <AuthQueryCacheReset />
@@ -257,28 +127,8 @@ export function SudobilityAppWithFirebaseAuth({
       );
     }
 
-    // Wrap with AuthProviderWrapper (custom or default)
-    if (AuthProviderWrapperProp) {
-      return <AuthProviderWrapperProp>{content}</AuthProviderWrapperProp>;
-    }
-
-    // Require texts when using default AuthProviderWrapper
-    if (!authTexts || !authErrorTexts) {
-      throw new Error(
-        '[SudobilityAppWithFirebaseAuth] authTexts and authErrorTexts are required when not using a custom AuthProviderWrapper'
-      );
-    }
-
-    return (
-      <DefaultAuthProviderWrapper
-        providers={authProviders}
-        enableAnonymous={enableAnonymousAuth}
-        texts={authTexts}
-        errorTexts={authErrorTexts}
-      >
-        {content}
-      </DefaultAuthProviderWrapper>
-    );
+    // Mount the app-provided auth provider around everything.
+    return <AuthProviderWrapper>{content}</AuthProviderWrapper>;
   };
 
   return (

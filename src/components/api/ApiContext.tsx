@@ -18,7 +18,6 @@ import { onIdTokenChanged } from 'firebase/auth';
 import { getInfoService } from '@sudobility/di/info';
 import { InfoType } from '@sudobility/types';
 import type { NetworkClient } from '@sudobility/types';
-import { useAuthStatus } from '@sudobility/components/auth';
 import {
   getFirebaseAuth,
   FirebaseAuthNetworkService,
@@ -92,19 +91,19 @@ export function ApiProvider({
   baseUrl: baseUrlProp,
   testMode = false,
 }: ApiProviderProps) {
-  const { user, loading: authLoading } = useAuthStatus();
   const [token, setToken] = useState<string | null>(null);
-  const [tokenLoading, setTokenLoading] = useState(false);
+  const [userId, setUserId] = useState<string | null>(null);
+  const [tokenLoading, setTokenLoading] = useState(true);
   const auth = getFirebaseAuth();
 
   const baseUrl = baseUrlProp || import.meta.env.VITE_API_URL || '';
-  const userId = user?.uid ?? null;
 
   // Listen for token changes - Firebase automatically refreshes tokens
   // onIdTokenChanged fires on: sign-in, sign-out, and token refresh
   useEffect(() => {
     if (!auth) {
       setToken(null);
+      setUserId(null);
       setTokenLoading(false);
       return;
     }
@@ -112,6 +111,8 @@ export function ApiProvider({
     setTokenLoading(true);
 
     const unsubscribe = onIdTokenChanged(auth, async firebaseUser => {
+      setUserId(firebaseUser?.uid ?? null);
+
       if (!firebaseUser) {
         setToken(null);
         setTokenLoading(false);
@@ -203,11 +204,11 @@ export function ApiProvider({
       userId,
       token,
       isReady: !!userId && !!token,
-      isLoading: authLoading || tokenLoading,
+      isLoading: tokenLoading,
       refreshToken,
       testMode,
     }),
-    [baseUrl, userId, token, authLoading, tokenLoading, refreshToken, testMode]
+    [baseUrl, userId, token, tokenLoading, refreshToken, testMode]
   );
 
   return <ApiContext.Provider value={value}>{children}</ApiContext.Provider>;
