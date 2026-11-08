@@ -33,6 +33,7 @@ PROJECTS=(
     "../guard_worker:60"
     # Level 1: Depends only on level 0 packages
     "../di:0"
+    "../routing:0"
     "../mail_box_components:0"
     "../mail_box_components_rn:60"
     # Level 2: Depends on level 0 + level 1
