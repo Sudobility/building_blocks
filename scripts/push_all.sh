@@ -33,6 +33,7 @@ PROJECTS=(
     "../guard_worker:60"
     # Level 1: Depends only on level 0 packages
     "../di:0"
+    "../printing_core:0"
     "../routing:0"
     "../mail_box_components:0"
     "../mail_box_components_rn:60"
@@ -41,6 +42,8 @@ PROJECTS=(
     "../auth_service:0"
     "../entity_client:0"
     "../entity_service:0"
+    "../printing:0"
+    "../printing_rn:0"
     "../ratelimit_client:0"
     "../ratelimit_service:0"
     "../seo_lib:60"
