@@ -46,6 +46,8 @@ PROJECTS=(
     "../printing_rn:0"
     "../ratelimit_client:0"
     "../ratelimit_service:0"
+    "../resources_client:0"
+    "../resources_service:0"
     "../seo_lib:60"
     # Level 3: Depends on levels 0-2
     "../di_web:0"
@@ -64,13 +66,14 @@ PROJECTS=(
     # SudobilityAppWithFirebaseAuthAndEntities, which composes building_blocks'
     # app shell, so they must publish after building_blocks/building_blocks_rn
     # (and after subscription_pages, which they also consume).
-    "../subscription_pages:0"
-    "../subscription_pages_rn:0"
-    "../ratelimit_pages:0"
     "../consumables_pages:0"
     "../consumables_pages_rn:0"
     "../entity_pages:0"
-    "../entity_pages_rn:60"
+    "../entity_pages_rn:0"
+    "../ratelimit_pages:0"
+    "../resources_pages:0"
+    "../subscription_pages:0"
+    "../subscription_pages_rn:0"
 )
 
 # Source reusable script: prefer local workflows repo, fall back to GitHub
