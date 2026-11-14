@@ -11,7 +11,7 @@
         "@sudobility/components": "^5.3.69",
         "@sudobility/design": "^1.1.71",
         "@sudobility/di": "^1.5.87",
-        "@sudobility/di_web": "^0.1.285",
+        "@sudobility/di_web": "^0.1.286",
         "@sudobility/types": "^1.10.1",
         "@tanstack/react-query": "~5.104.5",
         "@testing-library/dom": "~10.4.2",
@@ -487,7 +487,7 @@
 
     "@sudobility/di": ["@sudobility/di@1.5.87", "https://npm.pkg.github.com/download/@sudobility/di/1.5.87/12816c827fd880e694617992cce7532352b48d2e", { "peerDependencies": { "@notifee/react-native": ">=7.0.0", "@react-native-async-storage/async-storage": ">=1.19.0", "@react-native-community/netinfo": ">=9.0.0", "@react-native-firebase/analytics": ">=18.0.0", "@react-native-firebase/app": ">=18.0.0", "@react-native-firebase/messaging": ">=18.0.0", "@sudobility/types": "^1.10.1", "firebase": ">=11.0.0", "react": ">=18.0.0", "react-native": ">=0.70.0" } }, "sha512-ieA+6TqpQoCBGxIcvpUujQinErd+EmKJV3UqC+paPnFop7NAxEzZ+wkhy7r7TlY7PLSVUTYyksW90S9yqI36pQ=="],
 
-    "@sudobility/di_web": ["@sudobility/di_web@0.1.285", "https://npm.pkg.github.com/download/@sudobility/di_web/0.1.285/dff597746c5cf2c43189ce29749ffa1347855e2d", { "peerDependencies": { "@sudobility/components": "^5.3.68", "@sudobility/di": "^1.5.87", "@sudobility/types": "^1.10.1", "react": "^18.0.0 || ^19.0.0", "vite": "^5.0.0 || ^6.0.0 || ^7.0.0" } }, "sha512-tAZxgLcANXiuE0jYVQUqU9BDO2YHzAbmNKMp5dMr07lsyyAybbMJ8D/t5Cyb6v4gnEFQSSgOlbbMkrDvofmxUQ=="],
+    "@sudobility/di_web": ["@sudobility/di_web@0.1.286", "https://npm.pkg.github.com/download/@sudobility/di_web/0.1.286/e930a2718125c304814fd44e72ddfa94861de514", { "peerDependencies": { "@sudobility/components": "^5.3.69", "@sudobility/di": "^1.5.87", "@sudobility/types": "^1.10.1", "react": "^18.0.0 || ^19.0.0", "vite": "^5.0.0 || ^6.0.0 || ^7.0.0" } }, "sha512-dg/iZMLQRnVR5GC8RZ+G5dUy1Gq6vvoXRmU4kEHjeA+x0F3CHgXiHu+Lz8i3YXJrf2BKdY7VqoDBhiuNxbM1eA=="],
 
     "@sudobility/subscription_lib": ["@sudobility/subscription_lib@0.0.61", "https://npm.pkg.github.com/download/@sudobility/subscription_lib/0.0.61/cbf464cba3dbdfdbd6f1f93d86c0b765b07f4805", { "peerDependencies": { "@sudobility/types": "^1.9.78", "@tanstack/react-query": "^5.0.0", "react": "^18.0.0 || ^19.0.0" } }, "sha512-Q+k8lmG69Hk55ZH7OIjzZA3L3Snv8rqDIavas+azv2rYl1N5UXCA0lG4V96mf4u6lAUGj7eu9QTBICRSKUVUbg=="],
 

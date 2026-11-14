@@ -17,3 +17,10 @@ export {
   LanguageSelector,
   type LanguageSelectorProps,
 } from './language-selector';
+export {
+  AuthActionView,
+  createAuthAction,
+  type AuthActionViewProps,
+  type AuthActionUser,
+  type CreateAuthActionConfig,
+} from './auth-action';

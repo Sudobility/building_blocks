@@ -4,6 +4,9 @@ export * from './app';
 // API components
 export * from './api';
 
+// Auth components (provider-agnostic sign-in gate)
+export * from './auth';
+
 // TopBar components
 export * from './topbar';
 
