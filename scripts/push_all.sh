@@ -72,6 +72,7 @@ PROJECTS=(
     "../entity_pages_rn:0"
     "../ratelimit_pages:0"
     "../resources_pages:0"
+    "../resources_pages_rn:0"
     "../subscription_pages:0"
     "../subscription_pages_rn:0"
 )
