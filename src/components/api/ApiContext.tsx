@@ -16,8 +16,7 @@ import {
 } from 'react';
 import { onIdTokenChanged } from 'firebase/auth';
 import { getInfoService } from '@sudobility/di/info';
-import { InfoType } from '@sudobility/types';
-import type { NetworkClient } from '@sudobility/types';
+import { InfoType, type NetworkClient } from '@sudobility/types';
 import {
   getFirebaseAuth,
   FirebaseAuthNetworkService,
