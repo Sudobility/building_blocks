@@ -28,6 +28,7 @@ export default defineConfig({
         'react-i18next',
         'react-router-dom',
         'tailwind-merge',
+        /^zustand(\/|$)/,
       ],
       output: {
         globals: {

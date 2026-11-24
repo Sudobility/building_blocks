@@ -3,6 +3,7 @@ export * from './components/topbar';
 export * from './components/breadcrumbs';
 export * from './components/footer';
 export * from './components/layout';
+export * from './components/navigation';
 export * from './components/settings';
 export * from './components/pages';
 export * from './components/empty-state';
