@@ -1,5 +1,6 @@
 export { NavBar, type NavBarProps, type NavIconMap } from './NavBar';
 export { SlidingPanel, type SlidingPanelProps } from './SlidingPanel';
+export { SlidePanel, type SlidePanelProps } from './SlidePanel';
 export {
   NavProvider,
   useNavStore,

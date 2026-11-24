@@ -8,6 +8,10 @@
  * Drop-in usage: give it the `store` and a `screens` map (screen `key` → body renderer). Each
  * screen's bar comes from its entry's `nav` spec; override per-screen with `renderTitle` /
  * `renderActions`, or replace the whole bar with `renderNavBar`.
+ *
+ * As a drawer: pass the `open` prop (and optional `slideFrom`) to make the WHOLE panel slide in
+ * when shown and out when hidden. Keep the component mounted and toggle `open`; it stays mounted
+ * off-screen while hidden so the stack keeps its state, and the parent clips the slide.
  */
 import { useEffect, useRef, useState, type ReactNode } from 'react';
 import { useStore } from 'zustand';
@@ -40,6 +44,17 @@ export interface SlidingPanelProps {
    * effect until the screen has slid away (e.g. sign-out after a logout pop).
    */
   onPopComplete?: (popped: ScreenEntry) => void;
+  /**
+   * Drawer visibility. Omit (the default) and the panel simply fills its parent. Pass a boolean to
+   * make the WHOLE panel slide in when `true` and slide out when `false` — keep the component
+   * mounted and toggle this prop; it stays mounted (off-screen) while hidden so its stack keeps
+   * state. The parent must clip (`overflow-hidden` / a positioned container).
+   */
+  open?: boolean;
+  /** Edge the drawer slides from when `open` is used. Default `'right'`. */
+  slideFrom?: 'right' | 'left' | 'top' | 'bottom';
+  /** Called after the drawer has finished sliding out (only in the `open`-controlled mode). */
+  onHidden?: () => void;
   className?: string;
 }
 
@@ -67,6 +82,9 @@ export function SlidingPanel({
   renderActions,
   slideMs = 300,
   onPopComplete,
+  open,
+  slideFrom = 'right',
+  onHidden,
   className,
 }: SlidingPanelProps) {
   const stack = useStore(store, s => s.stack);
@@ -79,6 +97,31 @@ export function SlidingPanel({
   const [tx, setTx] = useState<Transition>(null);
   // false = the moving layer sits at its start position; true = animate it to its end.
   const [run, setRun] = useState(false);
+
+  // --- Drawer (whole-panel show/hide) ---
+  const controlled = open !== undefined;
+  const onHiddenRef = useRef(onHidden);
+  onHiddenRef.current = onHidden;
+  // `shown` drives the drawer transform. It starts false so a panel mounted already-open slides in
+  // on first appearance, rather than being there instantly.
+  const [shown, setShown] = useState(false);
+
+  useEffect(() => {
+    if (!controlled) return;
+    if (prefersReducedMotion()) {
+      setShown(Boolean(open));
+      if (!open) onHiddenRef.current?.();
+      return;
+    }
+    if (open) {
+      // Settle on the next frame so the off-screen start paints first, then slide in.
+      const raf = window.requestAnimationFrame(() => setShown(true));
+      return () => window.cancelAnimationFrame(raf);
+    }
+    setShown(false);
+    const t = window.setTimeout(() => onHiddenRef.current?.(), slideMs);
+    return () => window.clearTimeout(t);
+  }, [controlled, open, slideMs]);
 
   // Detect a navigation and start a slide. Only `push`/`pop` slide — `replace`/`reset` are
   // programmatic swaps and change instantly. Reduced motion cuts to the end at once.
@@ -195,7 +238,7 @@ export function SlidingPanel({
     return run ? 'translateX(100%)' : 'translateX(0)'; // pop
   };
 
-  return (
+  const content = (
     <div className={base}>
       {layers.map(layer => (
         <div
@@ -215,6 +258,33 @@ export function SlidingPanel({
           {renderScreen(layer.entry)}
         </div>
       ))}
+    </div>
+  );
+
+  // Uncontrolled: the panel just fills its parent (no whole-panel show/hide).
+  if (!controlled) return content;
+
+  // Controlled drawer: slide the whole panel in/out from an edge. It stays mounted (off-screen)
+  // while hidden so the stack keeps its state; the parent is responsible for clipping.
+  const offTransform = {
+    right: 'translateX(100%)',
+    left: 'translateX(-100%)',
+    top: 'translateY(-100%)',
+    bottom: 'translateY(100%)',
+  }[slideFrom];
+
+  return (
+    <div
+      className={cn('h-full w-full', !open && 'pointer-events-none')}
+      aria-hidden={!open}
+      style={{
+        transform: shown ? 'translate(0, 0)' : offTransform,
+        transition: prefersReducedMotion()
+          ? undefined
+          : `transform ${slideMs}ms ease-out`,
+      }}
+    >
+      {content}
     </div>
   );
 }

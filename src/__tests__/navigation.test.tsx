@@ -3,6 +3,7 @@ import { render, screen, fireEvent, act } from '@testing-library/react';
 import { createNavStore } from '@sudobility/navigation';
 import { NavBar } from '../components/navigation/NavBar';
 import { SlidingPanel } from '../components/navigation/SlidingPanel';
+import { SlidePanel } from '../components/navigation/SlidePanel';
 
 // Force reduced motion so push/pop are instant and deterministic (no rAF/timer).
 beforeEach(() => {
@@ -90,6 +91,43 @@ describe('SlidingPanel', () => {
     fireEvent.click(screen.getByRole('button', { name: 'Back' }));
     expect(screen.getByText('HOME BODY')).toBeInTheDocument();
   });
+
+  it('drawer mode: hidden panel stays mounted (keeps state) and is marked non-interactive', () => {
+    const store = createNavStore([{ key: 'home', nav: { title: 'Home' } }]);
+    const { container } = render(
+      <SlidingPanel store={store} screens={screens} open={false} />
+    );
+    // Content is still mounted while the drawer is closed, so its stack keeps state.
+    expect(screen.getByText('HOME BODY')).toBeInTheDocument();
+    // The whole panel is marked hidden + non-interactive.
+    expect(container.querySelector('[aria-hidden="true"]')).toBeTruthy();
+  });
+
+  it('drawer mode: closing fires onHidden once the slide-out completes', () => {
+    const store = createNavStore([{ key: 'home', nav: { title: 'Home' } }]);
+    const onHidden = vi.fn();
+    const { rerender } = render(
+      <SlidingPanel store={store} screens={screens} open onHidden={onHidden} />
+    );
+    expect(onHidden).not.toHaveBeenCalled();
+    rerender(
+      <SlidingPanel
+        store={store}
+        screens={screens}
+        open={false}
+        onHidden={onHidden}
+      />
+    );
+    expect(onHidden).toHaveBeenCalledTimes(1);
+  });
+
+  it('uncontrolled (no open prop): the panel fills its parent, not aria-hidden', () => {
+    const store = createNavStore([{ key: 'home', nav: { title: 'Home' } }]);
+    const { container } = render(
+      <SlidingPanel store={store} screens={screens} />
+    );
+    expect(container.querySelector('[aria-hidden="true"]')).toBeNull();
+  });
 });
 
 describe('NavBar', () => {
@@ -148,5 +186,40 @@ describe('NavBar', () => {
       <NavBar spec={{ title: 'T', hidden: true }} />
     );
     expect(container).toBeEmptyDOMElement();
+  });
+});
+
+describe('SlidePanel', () => {
+  it('renders its children when open', () => {
+    render(
+      <SlidePanel open>
+        <div>PANEL BODY</div>
+      </SlidePanel>
+    );
+    expect(screen.getByText('PANEL BODY')).toBeInTheDocument();
+  });
+
+  it('is not mounted when closed from the start', () => {
+    const { container } = render(
+      <SlidePanel open={false}>
+        <div>PANEL BODY</div>
+      </SlidePanel>
+    );
+    expect(container).toBeEmptyDOMElement();
+  });
+
+  it('unmounts and fires onHidden when closed', () => {
+    const onHidden = vi.fn();
+    const { rerender } = render(
+      <SlidePanel open onHidden={onHidden}>
+        <div>PANEL BODY</div>
+      </SlidePanel>
+    );
+    expect(screen.getByText('PANEL BODY')).toBeInTheDocument();
+    // The parent stops passing children as it closes (as `{cond && <Panel/>}` does).
+    rerender(<SlidePanel open={false} onHidden={onHidden} />);
+    // Reduced motion cuts instantly: unmounted + notified.
+    expect(screen.queryByText('PANEL BODY')).not.toBeInTheDocument();
+    expect(onHidden).toHaveBeenCalledTimes(1);
   });
 });
