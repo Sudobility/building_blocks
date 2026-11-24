@@ -128,6 +128,43 @@ describe('SlidingPanel', () => {
     );
     expect(container.querySelector('[aria-hidden="true"]')).toBeNull();
   });
+
+  it('drawer mode: className positions the sliding wrapper itself', () => {
+    const store = createNavStore([{ key: 'home', nav: { title: 'Home' } }]);
+    const { container } = render(
+      <SlidingPanel
+        store={store}
+        screens={screens}
+        open
+        className='absolute inset-y-0 right-0 w-[28rem]'
+      />
+    );
+    // The sliding wrapper (the aria-hidden-capable outer div) carries the positioning className,
+    // like SlidePanel — not the inner content box.
+    const wrapper = container.firstElementChild as HTMLElement;
+    expect(wrapper.className).toContain('absolute');
+    expect(wrapper.className).toContain('right-0');
+    expect(wrapper.className).toContain('w-[28rem]');
+  });
+
+  it('drawer mode: fullScreenOnMobile adds the phone-width full-screen override', () => {
+    const store = createNavStore([{ key: 'home', nav: { title: 'Home' } }]);
+    const { container } = render(
+      <SlidingPanel
+        store={store}
+        screens={screens}
+        open
+        fullScreenOnMobile
+        className='absolute inset-y-0 right-0 w-[28rem]'
+      />
+    );
+    const wrapper = container.firstElementChild as HTMLElement;
+    // Below `sm` it covers the whole clipping parent, beating the desktop sizing.
+    expect(wrapper.className).toContain('max-sm:!inset-0');
+    expect(wrapper.className).toContain('max-sm:!w-auto');
+    // Desktop sizing is still present for `sm`+.
+    expect(wrapper.className).toContain('w-[28rem]');
+  });
 });
 
 describe('NavBar', () => {

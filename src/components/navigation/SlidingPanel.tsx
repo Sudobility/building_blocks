@@ -11,7 +11,10 @@
  *
  * As a drawer: pass the `open` prop (and optional `slideFrom`) to make the WHOLE panel slide in
  * when shown and out when hidden. Keep the component mounted and toggle `open`; it stays mounted
- * off-screen while hidden so the stack keeps its state, and the parent clips the slide.
+ * off-screen while hidden so the stack keeps its state, and the parent clips the slide. In this
+ * mode `className` positions and sizes the sliding panel itself (like {@link SlidePanel}), and
+ * `fullScreenOnMobile` makes it cover the whole area on phone widths while using that `className`
+ * sizing on larger screens.
  */
 import { useEffect, useRef, useState, type ReactNode } from 'react';
 import { useStore } from 'zustand';
@@ -55,6 +58,20 @@ export interface SlidingPanelProps {
   slideFrom?: 'right' | 'left' | 'top' | 'bottom';
   /** Called after the drawer has finished sliding out (only in the `open`-controlled mode). */
   onHidden?: () => void;
+  /**
+   * Drawer-only (`open`-controlled). When set, the panel covers the whole area on phone-width
+   * viewports (below the `sm` breakpoint) like a full-screen modal, and falls back to the sizing in
+   * `className` at `sm`+ — the responsive "full screen on mobile, side panel on desktop" behaviour.
+   * The override is `!inset-0 !w-auto !max-w-none` below `sm`, so it beats a desktop `className`
+   * such as `right-0 w-[28rem]`. The drawer stays positioned by `className` (keep it `absolute`
+   * inside a clipping, positioned parent so the parked panel is clipped).
+   */
+  fullScreenOnMobile?: boolean;
+  /**
+   * Positioning + sizing. In uncontrolled mode it styles the fill box. In drawer mode (`open` set)
+   * it positions and sizes the sliding panel itself (e.g. `absolute inset-y-0 right-0 w-[28rem]`),
+   * mirroring {@link SlidePanel}; the parent must clip (`overflow-hidden`).
+   */
   className?: string;
 }
 
@@ -85,6 +102,7 @@ export function SlidingPanel({
   open,
   slideFrom = 'right',
   onHidden,
+  fullScreenOnMobile = false,
   className,
 }: SlidingPanelProps) {
   const stack = useStore(store, s => s.stack);
@@ -212,10 +230,12 @@ export function SlidingPanel({
     );
   };
 
+  // The content box. In drawer mode `className` moves to the sliding wrapper (below), so the box
+  // itself just fills that wrapper; in uncontrolled mode `className` styles this fill box directly.
   const base = cn(
     'relative h-full w-full overflow-hidden',
     ui.background.surface,
-    className
+    !controlled && className
   );
 
   // Every stack entry renders as its own absolutely-positioned layer, keyed stably by `id`, so
@@ -275,7 +295,13 @@ export function SlidingPanel({
 
   return (
     <div
-      className={cn('h-full w-full', !open && 'pointer-events-none')}
+      className={cn(
+        className ?? 'h-full w-full',
+        // Full-screen on phone widths: beat the desktop `className` sizing below `sm`.
+        fullScreenOnMobile &&
+          'max-sm:!inset-0 max-sm:!w-auto max-sm:!max-w-none',
+        !open && 'pointer-events-none'
+      )}
       aria-hidden={!open}
       style={{
         transform: shown ? 'translate(0, 0)' : offTransform,
