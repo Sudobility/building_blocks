@@ -1,6 +1,6 @@
 {
   "name": "@sudobility/building_blocks",
-  "version": "0.0.393",
+  "version": "0.0.394",
   "description": "Higher-level shared UI building blocks for Sudobility apps",
   "type": "module",
   "sideEffects": false,
@@ -86,7 +86,7 @@
     "@sudobility/components": "^5.3.78",
     "@sudobility/design": "^1.1.72",
     "@sudobility/di": "^1.5.91",
-    "@sudobility/di_web": "^0.1.292",
+    "@sudobility/di_web": "^0.1.293",
     "@sudobility/navigation": "^0.0.3",
     "@sudobility/types": "^1.11.2",
     "@tanstack/react-query": "~5.104.5",

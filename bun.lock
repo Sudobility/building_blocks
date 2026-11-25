@@ -11,7 +11,7 @@
         "@sudobility/components": "^5.3.78",
         "@sudobility/design": "^1.1.72",
         "@sudobility/di": "^1.5.91",
-        "@sudobility/di_web": "^0.1.292",
+        "@sudobility/di_web": "^0.1.293",
         "@sudobility/navigation": "^0.0.3",
         "@sudobility/types": "^1.11.2",
         "@tanstack/react-query": "~5.104.5",
@@ -491,7 +491,7 @@
 
     "@sudobility/di": ["@sudobility/di@1.5.91", "https://npm.pkg.github.com/download/@sudobility/di/1.5.91/5bdccb64b98d44119f84f0148e2a8c36a0d2e03a", { "peerDependencies": { "@notifee/react-native": ">=7.0.0", "@react-native-async-storage/async-storage": ">=1.19.0", "@react-native-community/netinfo": ">=9.0.0", "@react-native-firebase/analytics": ">=18.0.0", "@react-native-firebase/app": ">=18.0.0", "@react-native-firebase/messaging": ">=18.0.0", "@sudobility/types": "^1.11.2", "firebase": ">=11.0.0", "react": ">=18.0.0", "react-native": ">=0.70.0" } }, "sha512-9iC5Ug9SiO4bm+RvuvhHRu1WaxWb1XMkM0atsSdshTD3lh4DHZqWuTa7khScWwljaiuV7E/8YRVnxIkHoz2+aQ=="],
 
-    "@sudobility/di_web": ["@sudobility/di_web@0.1.292", "https://npm.pkg.github.com/download/@sudobility/di_web/0.1.292/4df49b6cae5df62d0a7b08eeea980e08a77a64cb", { "peerDependencies": { "@sudobility/components": "^5.3.76", "@sudobility/di": "^1.5.91", "@sudobility/types": "^1.11.2", "react": "^18.0.0 || ^19.0.0", "vite": "^5.0.0 || ^6.0.0 || ^7.0.0" } }, "sha512-l3AoyvL5FBvn4Wt73a1DAqjkfv124xh70CB9EW4cVDft4OWt2sWcZH9dTkvncItk79aTglSF2LmZCc/Gl+ckQw=="],
+    "@sudobility/di_web": ["@sudobility/di_web@0.1.293", "https://npm.pkg.github.com/download/@sudobility/di_web/0.1.293/e9904ed15cc286e5c3184aca31021e036d25de87", { "peerDependencies": { "@sudobility/components": "^5.3.78", "@sudobility/di": "^1.5.91", "@sudobility/types": "^1.11.2", "react": "^18.0.0 || ^19.0.0", "vite": "^5.0.0 || ^6.0.0 || ^7.0.0" } }, "sha512-Qsc2/nHU3gytw50Nu7iwX95EUNyfVb2MeQm9U5J5QQMaXUnURC1pnsdry01WcHd1LuUdA9BAi1YvN6BVnaN/Yw=="],
 
     "@sudobility/navigation": ["@sudobility/navigation@0.0.3", "https://npm.pkg.github.com/download/@sudobility/navigation/0.0.3/4a4bde1bea75495512ab294980390ae2b4a911e5", { "peerDependencies": { "zustand": ">=5.0.0" } }, "sha512-7XjaI0PDiKegvvTbB/HvkpgfZPHhnMTjcAFgXlLBbjjNMmde0B4otun+6rlh2xIHAEpPal/u72RC7oZ6Y7lt9g=="],
 
